@@ -7,7 +7,7 @@
     "start": "cross-env NODE_ENV=development nodemon ./src/bin/www.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --info true --progress",
     "watch": "cross-env NODE_ENV=development webpack --watch",
-    "build": "cross-env NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=production webpack && node ./dist/main.bundle.js",
     "mon": "cross-env NODE_ENV=development nodemon ./dist/main.bundle.js"
   },
   "keywords": [],
