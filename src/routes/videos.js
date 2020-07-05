@@ -9,8 +9,8 @@ router.get("/", function (req, res, next) {
   res.send(common.APP_NAME);
 });
 
-router.get('/profile', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/list', function(req, res, next) {
+  res.send('video list');
 });
 
 module.exports = router;
