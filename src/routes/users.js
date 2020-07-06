@@ -1,16 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const { common } = require("../config");
-const { getDB } = require('../util/database');
+const { getDB } = require("../util/database");
 
-/* GET home page. */
 router.get("/", function (req, res, next) {
   const db = getDB();
-  res.send(common.APP_NAME);
+  res.json({ message: "get users list" });
 });
 
-router.get('/profile', function(req, res, next) {
-  res.send('respond with a resource');
+router.get("/profile", function (req, res, next) {
+  res.json({ message: "get users profile" });
 });
 
 module.exports = router;
