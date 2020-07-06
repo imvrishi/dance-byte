@@ -3,32 +3,161 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    name : {
+    userName : {
         type : String,
         required : true
     },
-    email : {
-        type : String,
+    mobile : {
+        type : Number,
         required : true
     },
-    cart : {
-        items : [
-            {
-
-                productId : {
-                    type : Schema.Types.ObjectId,
-                    ref : 'Product',
-                    required : true
-                },
-                quantity : {
-                    type : Number, 
-                    required : true
-                }
+    otp : {
+        type : Number,
+        required : true
+    },
+    firstName : { type : String },
+    lastName : { type : String },
+    fulName : { type : String },
+    profilePicture : { type : String },
+    email: { type : String },
+    totalLikes : {
+        type : Number,
+        default: 0
+    },
+    totalViews : {
+        type : Number,
+        default: 0
+    },
+    totalFollowers : {
+        type : Number,
+        default: 0
+    },
+    totalFollowings : {
+        type : Number,
+        default: 0
+    },
+    totalBlockedUser : {
+        type : Number,
+        default: 0
+    },
+    intrests : {
+        type: [String]
+    },
+    followers : {
+        _id : { type : Schema.Types.ObjectId },
+        userName : {type : String },
+        fullName : {type : String },
+        profilePicture : {type : String },
+        followedTimestamp : {
+            type : Date,
+            default : Math.floor(Date.now() / 1000) // just trying to get timestamp value
+        }
+    },
+    followings : {
+        _id : { type : Schema.Types.ObjectId },
+        userName : {type : String },
+        fullName : {type : String },
+        profilePicture : {type : String },
+        followedTimestamp : {
+            type : Date,
+            default : Math.floor(Date.now() / 1000) // just trying to get timestamp value
+        }
+    },
+    blockedUsers : {
+        _id : { type : Schema.Types.ObjectId },
+        userName : {type : String },
+        fullName : {type : String },
+        profilePicture : {type : String },
+        followedTimestamp : {
+            type : Date,
+            default : Math.floor(Date.now() / 1000) // just trying to get timestamp value
+        }
+    },
+    currentDevice : {
+        deviceId:{
+           type :  String,
+           required : true
+        },
+        deviceModel:{
+            type : String,
+            required : true
+        },	
+        deviceOS:{
+            type : String,
+            required : true
+        },	
+        deviceOSVersion:{
+            type : String,
+            required : true
+        },	
+        apiVersion:{
+            type : String,
+            required : true
+        },	
+        deviceName:{
+            type : String,
+            required : true
+        },	
+        createdTimestamp:{
+            type : Date,
+            default : Math.floor(Date.now() / 1000) // just trying to get timestamp value
+        }
+    },
+    devices : [
+        {
+            deviceId:{
+                type :  String,
+                required : true
+            },
+            deviceModel:{
+                type : String,
+                required : true
+            },	
+            deviceOS:{
+                type : String,
+                required : true
+            },	
+            deviceOSVersion:{
+                type : String,
+                required : true
+            },	
+            apiVersion:{
+                type : String,
+                required : true
+            },	
+            deviceName:{
+                type : String,
+                required : true
+            },	
+            createdTimestamp:{
+                type : Date,
+                default : Math.floor(Date.now() / 1000) // just trying to get timestamp value
             }
-        ]
-    }
+        }
+    ],
+    currentLocation : {
+        type : String,
+        required : true
+    },
+    locations : {
+        type : [ String ],
+        required : true
+    },
+    tokens : {
+        trype : [String]
+    },
+    status : {
+        type : String,
+        enum : ['active', 'inactive', 'disabled'],
+        default: 'active'
+    },
+    timestamps: { createdAt: 'createdDate', updatedAt: 'updatedDate',  },
+    // createdTimestamp, updatedTimestamp Remaining to set in model
 });
 
+module.exports = mongoose.model('User', userSchema);
+
+// old functionality is here
 /* const mongodb =require('mongodb');
 
 const { getDB} = require('../util/database');

@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { common } = require("../config");
-const { getDB } = require('../util/database');
+const dbcon = require('../util/database');
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  const db = getDB();
+  //const db = getDB();
   res.send(common.APP_NAME);
 });
 
