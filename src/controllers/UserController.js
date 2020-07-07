@@ -4,6 +4,7 @@ const { common } = require("../config");
 exports.registerUser = async (req, res, next) => {
   const data = {
     userName: "rishi",
+    authenticatedToken: "32bitrandomstring",
     tokens: {
       loginType: "google",
       socialToken: "hex123",

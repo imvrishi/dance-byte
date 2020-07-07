@@ -49,6 +49,24 @@ const userSchema = new Schema(
       type: Number,
       default: 0,
     },
+    totalShares: {
+      type: Number,
+      default: 0,
+    },
+    authenticatedToken: {
+      type: String,
+      required: true,
+    },
+    accountType: {
+      type: String,
+      enum: ["public", "private"],
+      default: "public",
+    },
+    userType: {
+      type: String,
+      enum: ["normal", "special", "support", "admin"],
+      default: "normal",
+    },
     totalFollowers: {
       type: Number,
       default: 0,
