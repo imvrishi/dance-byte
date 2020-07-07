@@ -3,7 +3,7 @@ const process = require("process");
 const nodeExternals = require("webpack-node-externals");
 
 module.exports = {
-  mode: process.env.NODE_ENV,
+  mode: process.env.NODE_ENV === "development" ? "development" : "production" === "development" ? "development" : "production",
   entry: path.resolve(__dirname, "src", "bin", "www.js"),
   devtool: "inline-source-map",
   devServer: {

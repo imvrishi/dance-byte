@@ -1,9 +1,8 @@
-var express = require("express");
-var router = express.Router();
+const router = require("express").Router();
+const users = require("./users");
+const videos = require("./videos");
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.send("respond with a resource");
-});
+router.use("/users", users);
+router.use("/videos", videos);
 
 module.exports = router;

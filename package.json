@@ -2,13 +2,13 @@
   "name": "dance-byte",
   "version": "0.0.1",
   "description": "Dance Byte",
-  "main": "index.js",
+  "main": "./dist/main.bundle.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development nodemon ./src/bin/www.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --info true --progress",
     "watch": "cross-env NODE_ENV=development webpack --watch",
-    "build": "cross-env NODE_ENV=production webpack",
-    "mon": "cross-env NODE_ENV=development nodemon ./dist/main.bundle.js"
+    "mon": "cross-env NODE_ENV=development nodemon ./dist/main.bundle.js",
+    "build": "webpack",
+    "start": "node ./dist/main.bundle.js"
   },
   "keywords": [],
   "author": "",
@@ -24,8 +24,11 @@
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
+    "mongodb": "^3.5.9",
+    "mongoose": "^5.9.21",
     "morgan": "~1.9.1"
   }
 }
