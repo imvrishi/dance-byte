@@ -43,36 +43,45 @@ const userSchema = new Schema({
     intrests : {
         type: [String]
     },
-    followers : {
-        _id : { type : Schema.Types.ObjectId },
-        userName : {type : String },
-        fullName : {type : String },
-        profilePicture : {type : String },
-        followedTimestamp : {
-            type : Date,
-            default : Math.floor(Date.now() / 1000) // just trying to get timestamp value
+    followers : [
+        {
+            _id : { type : Schema.Types.ObjectId },
+            userName : {type : String },
+            fullName : {type : String },
+            profilePicture : {type : String },
+           /*  timestamps: { 
+                createdAt : 'createdTimestamp',
+                updatedAt : 'updatedTimestamp',
+                currentTime: () => Math.floor(Date.now() / 1000)
+            } */
         }
-    },
-    followings : {
-        _id : { type : Schema.Types.ObjectId },
-        userName : {type : String },
-        fullName : {type : String },
-        profilePicture : {type : String },
-        followedTimestamp : {
-            type : Date,
-            default : Math.floor(Date.now() / 1000) // just trying to get timestamp value
+    ],
+    followings : [
+        {
+            _id : { type : Schema.Types.ObjectId },
+            userName : {type : String },
+            fullName : {type : String },
+            profilePicture : {type : String },
+            /* timestamps: { 
+                createdAt : 'createdTimestamp',
+                updatedAt : 'updatedTimestamp',
+                currentTime: () => Math.floor(Date.now() / 1000)
+            } */
         }
-    },
-    blockedUsers : {
-        _id : { type : Schema.Types.ObjectId },
-        userName : {type : String },
-        fullName : {type : String },
-        profilePicture : {type : String },
-        followedTimestamp : {
-            type : Date,
-            default : Math.floor(Date.now() / 1000) // just trying to get timestamp value
+    ],
+    blockedUsers : [
+        {
+            _id : { type : Schema.Types.ObjectId },
+            userName : {type : String },
+            fullName : {type : String },
+            profilePicture : {type : String },
+            /* timestamps: { 
+                createdAt : 'createdTimestamp',
+                updatedAt : 'updatedTimestamp',
+                currentTime: () => Math.floor(Date.now() / 1000)
+            } */
         }
-    },
+    ],
     currentDevice : {
         deviceId:{
            type :  String,
@@ -98,10 +107,11 @@ const userSchema = new Schema({
             type : String,
             required : true
         },	
-        createdTimestamp:{
-            type : Date,
-            default : Math.floor(Date.now() / 1000) // just trying to get timestamp value
-        }
+        /* timestamps: { 
+            createdAt : 'createdTimestamp',
+            updatedAt : 'updatedTimestamp',
+            currentTime: () => Math.floor(Date.now() / 1000)
+        } */
     },
     devices : [
         {
@@ -129,10 +139,11 @@ const userSchema = new Schema({
                 type : String,
                 required : true
             },	
-            createdTimestamp:{
-                type : Date,
-                default : Math.floor(Date.now() / 1000) // just trying to get timestamp value
-            }
+           /*  timestamps: { 
+                createdAt : 'createdTimestamp',
+                updatedAt : 'updatedTimestamp',
+                currentTime: () => Math.floor(Date.now() / 1000)
+            } */
         }
     ],
     currentLocation : {
@@ -151,7 +162,12 @@ const userSchema = new Schema({
         enum : ['active', 'inactive', 'disabled'],
         default: 'active'
     },
-    timestamps: { createdAt: 'createdDate', updatedAt: 'updatedDate',  },
+    /* timestamps: { createdAt: 'createdDate', updatedAt: 'updatedDate',  },
+    timestamps: { 
+        createdAt : 'createdTimestamp',
+        updatedAt : 'updatedTimestamp',
+        currentTime: () => Math.floor(Date.now() / 1000)
+    } */
     // createdTimestamp, updatedTimestamp Remaining to set in model
 });
 

@@ -1,13 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { common } = require("../config");
-const dbcon = require('../util/database');
+
+const userController = require('../controllers/UserController');
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  //const db = getDB();
-  res.send(common.APP_NAME);
-});
+router.get("/", userController.registerUser);
 
 router.get('/profile', function(req, res, next) {
   res.send('respond with a resource');
