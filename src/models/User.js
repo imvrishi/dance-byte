@@ -14,7 +14,6 @@ const userSchema = new Schema(
       },
       mobile: {
         type: Number,
-        required: true,
       },
     },
     otp: {
@@ -196,6 +195,7 @@ const userSchema = new Schema(
       loginType: {
         type: String,
         enum: ["mobile", "email", "google", "facebook", "twitter", "instagram"],
+        required: true,
       },
       socialToken: {
         type: String,
