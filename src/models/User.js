@@ -14,7 +14,6 @@ const userSchema = new Schema(
       },
       mobile: {
         type: Number,
-        required: true,
       },
     },
     otp: {
@@ -49,6 +48,24 @@ const userSchema = new Schema(
     totalViews: {
       type: Number,
       default: 0,
+    },
+    totalShares: {
+      type: Number,
+      default: 0,
+    },
+    authenticatedToken: {
+      type: String,
+      required: true,
+    },
+    accountType: {
+      type: String,
+      enum: ["public", "private"],
+      default: "public",
+    },
+    userType: {
+      type: String,
+      enum: ["normal", "special", "support", "admin"],
+      default: "normal",
     },
     totalFollowers: {
       type: Number,
@@ -196,6 +213,7 @@ const userSchema = new Schema(
       loginType: {
         type: String,
         enum: ["mobile", "email", "google", "facebook", "twitter", "instagram"],
+        required: true,
       },
       socialToken: {
         type: String,
