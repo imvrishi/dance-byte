@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const { common } = require("../config");
+const response = require("../util/response");
 
 exports.registerUser = async (req, res, next) => {
   const data = {
@@ -37,24 +38,14 @@ exports.postRegisterUser = async (req, res, next) => {
 
 exports.postVerifyUserName = async (req, res, next) => {
   const userName = req.body.userName;
-
-  // Validating the post data
-  if (typeof userName !== "string" || !userName) {
-    return res.json({ error: "userName is required" });
-  }
-
   try {
     const param = { userName: userName };
-    User.findOne(param, function (error, user) {
-      if (error) {
-        console.log(error);
-        return res.json({ error: "There is some error with this userName" });
-      }
-      console.log(user);
-      return res.json({ message: user });
-    });
+    const user = await User.findOne(param);
+    if (user === null) {
+      return res.success("Available");
+    }
+    return res.fail("Not Available");
   } catch (error) {
-    console.log(error);
-    return res.json({ error: "There is some error with this userName" });
+    return res.fail("Not Available");
   }
 };

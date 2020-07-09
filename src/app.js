@@ -6,14 +6,19 @@ const logger = require("morgan");
 
 const router = require("./routes");
 const database = require("./util/database")();
+const middlewares = require("./middlewares");
 
 const app = express();
 
 app.use(logger("dev"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "..", "public")));
+
+for (const k in middlewares) {
+  app.use(middlewares[k]);
+}
 
 app.use("/", router);
 
