@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const verifyUserName = require("../controllers/User");
+const verifyUserName = require("../controllers/User/VerifyUserName");
 const userController = require("../controllers/UserController");
 
 /* GET home page. */
