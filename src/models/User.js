@@ -227,6 +227,32 @@ const userSchema = new Schema(
     interestedLanguages: {
       type: String,
     },
+    videos: {
+      liked: [
+        {
+          video: {
+            type: Schema.Types.ObjectId,
+            ref: "Video",
+          },
+        },
+      ],
+      shared: [
+        {
+          video: {
+            type: Schema.Types.ObjectId,
+            ref: "Video",
+          },
+        },
+      ],
+      uploaded: [
+        {
+          video: {
+            type: Schema.Types.ObjectId,
+            ref: "Video",
+          },
+        },
+      ],
+    },
   },
   {
     timestamps: {
