@@ -1,6 +1,6 @@
-const express = require("express");
-const router = express.Router();
+const router = require("express").Router();
 
+const verifyUserName = require("../controllers/User/VerifyUserName");
 const userController = require("../controllers/UserController");
 
 /* GET home page. */
@@ -8,7 +8,14 @@ router.get("/", userController.registerUser);
 
 router.post("/", userController.postRegisterUser);
 
-router.post("/verifyUserName", userController.postVerifyUserName);
+/**
+ * Every route should have its own validator and handler
+ */
+router.post(
+  "/verifyUserName",
+  verifyUserName.validator,
+  verifyUserName.handler
+);
 
 router.get("/profile", function (req, res, next) {
   res.json({ message: "get users profile" });
