@@ -1,9 +1,11 @@
 const path = require("path");
 const process = require("process");
 const nodeExternals = require("webpack-node-externals");
+const swaggerJsdocSyncWebpackPlugin = require("swagger-jsdoc-sync-webpack-plugin");
+const package = require("./package.json");
 
 module.exports = {
-  mode: process.env.NODE_ENV === "development" ? "development" : "production" === "development" ? "development" : "production",
+  mode: process.env.NODE_ENV === "development" ? "development" : "production",
   entry: path.resolve(__dirname, "src", "bin", "www.js"),
   devtool: "inline-source-map",
   devServer: {
@@ -23,6 +25,30 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new swaggerJsdocSyncWebpackPlugin({
+      swagger: {
+        openapi: "3.0.0",
+        info: {
+          title: "Dance Byte API",
+          // termsOfService: "https://path.to.terms",
+          contact: {
+            name: "Rishikesh Vishwakarma",
+            // url: "https://path.to.support",
+            email: "imvrishi@gmail.com",
+          },
+          description:
+            "These apis are used to provide functionality to Dance Byte app",
+          version: package.version,
+          tags: {
+            name: "API",
+            description: "API for Dance Byte",
+          },
+        },
+      },
+      prettyJson: true,
+    }),
+  ],
   externals: [nodeExternals()],
   resolve: {
     extensions: [".jsx", ".js"],

@@ -1,0 +1,48 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Dance Byte API",
+    "contact": {
+      "name": "Rishikesh Vishwakarma",
+      "email": "imvrishi@gmail.com"
+    },
+    "description": "These apis are used to provide functionality to Dance Byte app",
+    "version": "0.0.1",
+    "tags": {
+      "name": "API",
+      "description": "API for Dance Byte"
+    }
+  },
+  "paths": {
+    "/users/verifyUserName": {
+      "post": {
+        "description": "Verifies whether the passed username is available or not",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userName",
+            "description": "Username to check for availability",
+            "in": "rawJson",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns string Available or Not Available"
+          },
+          "400": {
+            "description": "Returns validation error"
+          }
+        },
+        "tags": [
+          "user"
+        ]
+      }
+    }
+  },
+  "components": {},
+  "tags": []
+}

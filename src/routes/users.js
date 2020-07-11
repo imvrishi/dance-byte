@@ -3,13 +3,32 @@ const router = require("express").Router();
 const verifyUserName = require("../controllers/User/VerifyUserName");
 const userController = require("../controllers/UserController");
 
-/* GET home page. */
 router.get("/", userController.registerUser);
 
 router.post("/", userController.postRegisterUser);
 
 /**
- * Every route should have its own validator and handler
+ * @swagger
+ *
+ * /users/verifyUserName:
+ *  post:
+ *    description: Verifies whether the passed username is available or not
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - name: userName
+ *        description: Username to check for availability
+ *        in: rawJson
+ *        required: true
+ *        type: string
+ *    responses:
+ *      200:
+ *        description: Returns string Available or Not Available
+ *      400:
+ *        description: Returns validation error
+ *    tags:
+ *      - user
+ *
  */
 router.post(
   "/verifyUserName",
