@@ -1,11 +1,12 @@
 const Joi = require("@hapi/joi");
-const User = require("../../models/User");
 const validator = require("express-joi-validation").createValidator({
   passError: true,
 });
 
+const User = require("../../models/User");
+
 const schema = Joi.object().keys({
-  userId: Joi.string(),
+  userId: Joi.string().required(),
 });
 
 exports.validator = validator.body(schema);
