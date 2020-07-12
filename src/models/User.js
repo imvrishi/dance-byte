@@ -40,7 +40,9 @@ const userSchema = new Schema(
     profilePicture: {
       type: String,
     },
-    email: { type: String },
+    email: {
+      type: String,
+    },
     totalLikes: {
       type: Number,
       default: 0,
