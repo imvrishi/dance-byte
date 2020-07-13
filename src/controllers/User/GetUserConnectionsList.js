@@ -9,7 +9,9 @@ const common = require("../../config/common");
 
 const schema = Joi.object().keys({
   userId: Joi.string().required(),
-  connection: Joi.string().valid("followers", "followings").required(),
+  connection: Joi.string()
+    .valid("followers", "followings", "blockedUsers")
+    .required(),
   limit: Joi.number().positive().greater(0),
   offset: Joi.number().positive().min(0),
 });

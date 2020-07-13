@@ -14,7 +14,7 @@ exports.validator = validator.body(schema);
 exports.handler = async (req, res, nex) => {
   const userId = req.body.userId;
   const fieldsToSelect =
-    "userName firstName lastName fullName bio profilePicture email accountType userType totalFollowers totalFollowings status videos.uploaded";
+    "userName firstName lastName fullName bio profilePicture email accountType userType totalFollowers totalFollowings status";
   try {
     const user = await User.findById(userId).select(fieldsToSelect);
 
