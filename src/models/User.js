@@ -17,7 +17,7 @@ const userSchema = new Schema(
       },
     },
     otp: {
-      type: String,
+      type: [Number],
     },
     isLoggedIn: {
       type: Boolean,

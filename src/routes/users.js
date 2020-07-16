@@ -6,6 +6,8 @@ const getUserVideosList = require("../controllers/User/GetUserVideosList");
 const userController = require("../controllers/UserController");
 const registerUser  = require("../controllers/User/RegisterUser");
 const getUserConnectionsList  = require("../controllers/User/GetUserConnectionsList");
+const verifyOtp  = require("../controllers/User/VerifyOtp");
+const generateOtp  = require("../controllers/User/GenerateOtp");
 
 router.get("/", userController.registerUser);
 
@@ -286,6 +288,71 @@ router.post(
   "/registerUser",
   registerUser.validator,
   registerUser.handler
+); 
+
+/**
+ * @swagger
+ *
+ * /users/verifyOtp:
+ *  post:
+ *    description: Verifies whether the passed username is available or not
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - name: userid
+ *        description:  exiting userid
+ *        in: rawJson
+ *        required: true
+ *        type: string
+ * 
+ *      - name: otp
+ *        description: Enter otp check with user otp 
+ *        in: rawJson
+ *        required: true
+ *        type: number
+ *    responses:
+ *      200:
+ *        description: Returns string Available or Not Available
+ *      400:
+ *        description: Returns validation error
+ *    tags:
+ *      - user
+ *
+ */
+router.post(
+  "/verifyOtp",
+  verifyOtp.validator,
+  verifyOtp.handler
+); 
+
+/**
+ * @swagger
+ *
+ * /users/generateOtp:
+ *  post:
+ *    description: Verifies whether the passed username is available or not
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - name: userid
+ *        description:  exiting userid
+ *        in: rawJson
+ *        required: true
+ *        type: string
+ *      
+ *    responses:
+ *      200:
+ *        description: Returns send generated otp
+ *      400:
+ *        description: Returns validation error
+ *    tags:
+ *      - user
+ *
+ */
+router.post(
+  "/generateOtp",
+  generateOtp.validator,
+  generateOtp.handler
 ); 
 
 module.exports = router;
