@@ -2,9 +2,7 @@ const Joi = require("@hapi/joi");
 const validator = require("express-joi-validation").createValidator({
   passError: true,
 });
-
 const User = require("../../models/User");
-const { exist } = require("@hapi/joi");
 
 const schema = Joi.object().keys({
   userId    : Joi.string().required(),
@@ -13,21 +11,21 @@ const schema = Joi.object().keys({
 exports.validator = validator.body(schema);
 
 exports.handler = async (req, res, nex) => {    
- const  userId    = req.body.userId; 
- const  new_otp   = Math.floor(Math.random() * 1000000);
-
-  try {    
-    const userInsertData = User.findByIdAndUpdate(userId,
-        {$push: {otp: new_otp}},
-        {safe: true, upsert: true},
-        function(err, doc) {
-            if(err){
-              res.fail("otp not send");
-            }else{
-              res.success("otp send", new_otp);
-            }
+    const  userId    = req.body.userId; 
+    const  new_otp   = Math.floor(100000 + Math.random() * 900000);
+  try {   
+    const user = await User.findById(userId);
+    if(user.otp.length+1 <=3){
+      const userFollowing=await User.update({_id: userId}, {$push:{otp: new_otp }});
+        if (userFollowing) {      
+          res.success("your otp", new_otp);
+        } else {
+          res.fail("otp not send");
         }
-    );
+    }else{
+      res.fail("only try 3 time");
+    }
+    
 
   } catch (error) {
     res.fail("Invalied Request");

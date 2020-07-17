@@ -170,7 +170,7 @@ router.post(
  *
  * /users/registerUser:
  *  post:
- *    description: Verifies whether the passed username is available or not
+ *    description: registerUser use for add user details
  *    produces:
  *      - application/json
  *    parameters:
@@ -295,7 +295,8 @@ router.post(
  *
  * /users/verifyOtp:
  *  post:
- *    description: Verifies whether the passed username is available or not
+ *    description: verifyOtp check user enter otp is valid or not if enter valid otp the
+ *                 isLogin status updated as 1 and send success msg and existing otp deleted
  *    produces:
  *      - application/json
  *    parameters:
@@ -312,7 +313,7 @@ router.post(
  *        type: number
  *    responses:
  *      200:
- *        description: Returns string Available or Not Available
+ *        description: Returns success msg
  *      400:
  *        description: Returns validation error
  *    tags:
@@ -330,7 +331,7 @@ router.post(
  *
  * /users/generateOtp:
  *  post:
- *    description: Verifies whether the passed username is available or not
+ *    description: generateOtp for new userr login and only 3 otp generated
  *    produces:
  *      - application/json
  *    parameters:

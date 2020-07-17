@@ -34,7 +34,7 @@ exports.handler = async (req, res,next) => {
       mobile            :req.body.mobile,
       countryCode       :req.body.countryCode,
     },
-    otp                 : [Math.floor(Math.random() * 1000000)],
+    otp                 : [Math.floor(100000 + Math.random() * 900000)],
     authenticatedToken  : req.body.authenticatedToken,
     accountType         : req.body.accountType,
     interests           : req.body.interests,   
@@ -55,7 +55,8 @@ exports.handler = async (req, res,next) => {
     },
     tokens : {
            loginType   : "mobile"
-    }
+    },
+    isRegister        : 1,
   };
 
   try {
