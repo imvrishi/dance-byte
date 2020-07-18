@@ -56,7 +56,7 @@ exports.handler = async (req, res,next) => {
     tokens : {
            loginType   : "mobile"
     },
-    isRegister        : 1,
+    isRegistered        : 1,
   };
 
   try {

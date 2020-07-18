@@ -84,14 +84,6 @@ const userSchema = new Schema(
     interests: {
       type: [String],
     },
-    isLogin: {
-      type: Number,
-      default: 0,
-    },
-    isRegister: {
-      type: Number,
-      default: 0,
-    },
     followers: [
       {
         _id: { type: Schema.Types.ObjectId },

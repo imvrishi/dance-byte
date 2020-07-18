@@ -19,7 +19,7 @@
       const user = await User.find({"otp" : { $in : [req.body.otp]}});
 
       if ((user.length)>0) {
-        await User.update({_id: userId}, {$set:{otp: []}, isLogin : 1});
+        await User.update({_id: userId}, {$set:{otp: []}, isLoggedIn : 1});
         res.success("verified", otp);
       } else {
         res.fail("otp not verified");
