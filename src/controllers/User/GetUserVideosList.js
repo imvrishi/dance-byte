@@ -7,14 +7,13 @@ const validator = require("express-joi-validation").createValidator({
 const User = require("../../models/User");
 const common = require("../../config/common");
 
-const schema = Joi.object().keys({
-  userId: Joi.string().required(),
-  videosType: Joi.string().valid("uploaded", "liked").required(),
-  limit: Joi.number().positive().greater(0),
-  offset: Joi.number().positive().min(0),
-});
+const schema = require("../../util/validator");
 
-exports.validator = validator.body(schema);
+const joiSchema = { ...schema };
+joiSchema.userId = Joi.string().required();
+joiSchema.videosType = Joi.string().valid("uploaded", "liked").required();
+
+exports.validator = validator.body(joiSchema);
 
 exports.handler = async (req, res, next) => {
   const userId = req.body.userId;
@@ -40,6 +39,6 @@ exports.handler = async (req, res, next) => {
       return res.fail("Sorry you don't have " + videosType + " any video.");
     }
   } catch (error) {
-    return res.fail("Sorry you don't have " + videosType + " any video.");
+    return res.exception("Something went wrong", error);
   }
 };
