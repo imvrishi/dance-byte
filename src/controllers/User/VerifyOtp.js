@@ -14,18 +14,18 @@
   exports.handler = async (req, res, nex) => {
     const userId  = req.body.userId;
     const otp     = req.body.otp;
-    const fieldsToSelect ="otp";
+
     try {  
-      const user = await User.find({"otp" : { $in : [req.body.otp]}});
+      const user = await User.find({"otp" : { $in : [otp]}});
 
       if ((user.length)>0) {
-        await User.update({_id: userId}, {$set:{otp: []}, isLoggedIn : 1});
-        res.success("verified", otp);
+        await User.update({_id: userId}, {$set:{otp: []}, isLoggedIn : true});
+        res.success("otp verified successfully", otp);
       } else {
-        res.fail("otp not verified");
+        res.fail("Enter valid otp");
       }
 
     } catch (error) {
-      res.fail("invalid request");
+      return res.fail("Something went wrong", error);
     }
   };
