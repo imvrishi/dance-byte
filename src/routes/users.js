@@ -156,7 +156,6 @@ router.post(
  *        description: Returns validation error
  *    tags:
  *      - user
- *
  */
 router.post(
   "/getUserVideos",
@@ -167,43 +166,36 @@ router.post(
 /**
  * @swagger
  *
- * /users/getUserVideos:
+ * /users/userFollowUnfollow:
  *  post:
- *    description: Gets the liked/uploaded videos list of provided userId
+ *    description:We use this API to follow or un-follow.
  *    produces:
  *      - application/json
  *    parameters:
  *      - name: userId
- *        description: userId to get liked/uploaded videos list
+ *        description: Which user is trying to follow/un-follow, we need their UserId.
  *        in: rawJson
  *        required: true
  *        type: string
  *
- *      - name: videosType
- *        description: In this field you have to provide either uploaded or liked so that we provide concerning list
+ *      - name: targetedUserId
+ *        description: The UserId of that user who will be followed/un-followed by userId, we need their userId as targetedUserId.
  *        in: rawJson
  *        required: true
- *        type: string
- *
- *      - name: limit
- *        description: limit to get liked/uploaded videos list with pagination. If you don't provide this by default this will get value from config.
- *        in: rawJson
- *        required: false
  *        type: number
  *
- *      - name: offset
- *        description: offset to get liked/uploaded videos list with pagination. If you don't provide this by default this will get value from config.
+ *      - name: action
+ *        description: This param will hold follow or un-follow string as value, as per request need.
  *        in: rawJson
- *        required: false
+ *        required: true
  *        type: number
  *    responses:
  *      200:
- *        description: Returns string Liked/Uploaded videos list fetched successfully (with liked/uploaded videos list array) or Sorry you don't have liked/uploaded any video.
+ *        description: Returns string You have successfully followed/un-followed along with data array or There is some error to follow/un-follow.
  *      400:
  *        description: Returns validation error
  *    tags:
  *      - user
- *
  */
 router.post(
   "/userFollowUnfollow",

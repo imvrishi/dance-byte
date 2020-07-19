@@ -10,9 +10,6 @@ const schema = Joi.object().keys({
   userId: Joi.string().required(),
   targetedUserId: Joi.string().required(),
   action: Joi.string().valid("follow", "un-follow").required(),
-  // userName: Joi.string().required(),
-  // fullName: Joi.string(),
-  // profilePicture: Joi.string(),
 });
 
 exports.validator = validator.body(schema);
@@ -30,8 +27,8 @@ exports.handler = async (req, res, next) => {
       "userName fullName totalFollowers totalFollowings followers  followings"
     );
 
+    // Setting the DB operation as per action.
     if (action === "follow") {
-      // Updating the following document
       targetedUserData.totalFollowers = targetedUserData.totalFollowers + +1;
       targetedUserData.followers.push({
         _id: userId,
@@ -40,7 +37,6 @@ exports.handler = async (req, res, next) => {
         profilePicture: userData.profilePicture,
       });
 
-      // updating the follower document
       userData.totalFollowings = userData.totalFollowings + +1;
       userData.followings.push({
         _id: targetedUserId,
@@ -48,38 +44,27 @@ exports.handler = async (req, res, next) => {
         fullName: targetedUserData.fullName,
         profilePicture: targetedUserData.profilePicture,
       });
-
-      const userFollowing = await targetedUserData.save();
-      const userFollower = await userData.save();
-
-      if (userFollowing && userFollower) {
-        return res.success("You have successfully followed.", {
-          followingData: userFollowing,
-          followerData: userFollower,
-        });
-      } else {
-        return res.fail("There is some error to follow.");
-      }
     } else {
       targetedUserData.totalFollowers = targetedUserData.totalFollowers - 1;
       targetedUserData.followers.pull(userId);
 
       userData.totalFollowings = userData.totalFollowings - 1;
       userData.followings.pull(targetedUserId);
+    }
 
-      const userUnFollowing = await targetedUserData.save();
-      const userUnFollower = await userData.save();
-
-      if (userUnFollowing && userUnFollower) {
-        return res.success("You have successfully un-followed.", {
-          followingData: userUnFollowing,
-          followerData: userUnFollower,
-        });
-      } else {
-        return res.fail("There is some error to un-follow.");
-      }
+    // Preforming the operation on DB
+    const userActionData = await targetedUserData.save();
+    const targetActionData = await userData.save();
+    if (userActionData && targetActionData) {
+      return res.success("You have successfully " + action + "ed.", {
+        userActionData: userActionData,
+        targetActionData: targetActionData,
+      });
+    } else {
+      return res.fail("There is some error to " + action + ".");
     }
   } catch (error) {
-    return res.fail("There is some error in query", error);
+    console.log(error);
+    return res.fail("Something went wrong", error);
   }
 };
