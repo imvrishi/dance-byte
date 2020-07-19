@@ -6,17 +6,15 @@ const validator = require("express-joi-validation").createValidator({
 
 const User = require("../../models/User");
 const common = require("../../config/common");
+const schema = require("../../util/validator");
 
-const schema = Joi.object().keys({
-  userId: Joi.string().required(),
-  connection: Joi.string()
-    .valid("followers", "followings", "blockedUsers")
-    .required(),
-  limit: Joi.number().positive().greater(0),
-  offset: Joi.number().positive().min(0),
-});
+const joiSchema = { ...schema };
+joiSchema.userId = Joi.string().required();
+joiSchema.connection = Joi.string()
+  .valid("followers", "followings", "blockedUsers")
+  .required();
 
-exports.validator = validator.body(schema);
+exports.validator = validator.body(Joi.object().keys(joiSchema));
 
 exports.handler = async (req, res, next) => {
   const userId = req.body.userId;
@@ -39,6 +37,6 @@ exports.handler = async (req, res, next) => {
       return res.fail("Sorry you don't have " + connection + ".");
     }
   } catch (error) {
-    return res.fail("Sorry you don't have " + connection + ".");
+    return res.exception("Something went wrong", error);
   }
 };

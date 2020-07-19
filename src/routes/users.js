@@ -1,16 +1,11 @@
 const router = require("express").Router();
 
-const verifyUserName = require("../controllers/User/VerifyUserName");
+const checkUserNameAvailability = require("../controllers/User/CheckUserNameAvailability");
 const getUserProfile = require("../controllers/User/GetUserProfile");
 const getUserVideosList = require("../controllers/User/GetUserVideosList");
 const getFollowUnfollowUser = require("../controllers/User/FollowUnfollowUser");
 const getUserConnectionsList = require("../controllers/User/GetUserConnectionsList");
-const userController = require("../controllers/UserController");
 const registerUser = require("../controllers/User/RegisterUser");
-
-router.get("/", userController.registerUser);
-
-router.post("/", userController.postRegisterUser);
 
 /**
  * @swagger
@@ -38,8 +33,8 @@ router.post("/", userController.postRegisterUser);
  */
 router.post(
   "/checkUserNameAvailability",
-  verifyUserName.validator,
-  verifyUserName.handler
+  checkUserNameAvailability.validator,
+  checkUserNameAvailability.handler
 );
 
 /**

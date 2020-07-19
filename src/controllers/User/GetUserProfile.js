@@ -5,11 +5,12 @@ const validator = require("express-joi-validation").createValidator({
 
 const User = require("../../models/User");
 
-const schema = Joi.object().keys({
-  userId: Joi.string().required(),
-});
+const schema = require("../../util/validator");
 
-exports.validator = validator.body(schema);
+const joiSchema = { ...schema };
+joiSchema.userId = Joi.string().required();
+
+exports.validator = validator.body(joiSchema);
 
 exports.handler = async (req, res, nex) => {
   const userId = req.body.userId;
@@ -24,6 +25,6 @@ exports.handler = async (req, res, nex) => {
       res.fail("You have provided wrong userId");
     }
   } catch (error) {
-    res.fail("Requested user does not exists");
+    return res.exception("Something went wrong", error);
   }
 };

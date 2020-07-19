@@ -5,14 +5,14 @@ const validator = require("express-joi-validation").createValidator({
 });
 
 const User = require("../../models/User");
+const schema = require("../../util/validator");
 
-const schema = Joi.object().keys({
-  userId: Joi.string().required(),
-  targetedUserId: Joi.string().required(),
-  action: Joi.string().valid("follow", "un-follow").required(),
-});
+const joiSchema = { ...schema };
+joiSchema.userId = Joi.string().required();
+joiSchema.targetedUserId = Joi.string().required();
+joiSchema.action = Joi.string().valid("follow", "un-follow").required();
 
-exports.validator = validator.body(schema);
+exports.validator = validator.body(Joi.object().keys(joiSchema));
 
 exports.handler = async (req, res, next) => {
   const userId = req.body.userId;
@@ -64,7 +64,6 @@ exports.handler = async (req, res, next) => {
       return res.fail("There is some error to " + action + ".");
     }
   } catch (error) {
-    console.log(error);
-    return res.fail("Something went wrong", error);
+    return res.exception("Something went wrong", error);
   }
 };
