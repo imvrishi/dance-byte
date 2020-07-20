@@ -13,7 +13,7 @@
 
   exports.handler = async (req, res, nex) => {
     const userId  = req.body.userId;
-    const fieldsToSelect ="tokens";
+    const fieldsToSelect ="tokens.loginType";
 
     try {  
       const user = await User.findById(userId).select(fieldsToSelect);

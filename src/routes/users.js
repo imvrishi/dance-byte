@@ -209,7 +209,7 @@ router.post(
  *
  * /users/registerUser:
  *  post:
- *    description: registerUser use for add new user details
+ *    description: registerUser use for create newe user
  *    produces:
  *      - application/json
  *    parameters:
@@ -365,7 +365,7 @@ router.post(
  *
  * /users/generateOtp:
  *  post:
- *    description: generateOtp for new otp generated
+ *    description: generateOtp use for generate new otp and sent to user
  *    produces:
  *      - application/json
  *    parameters:
@@ -395,7 +395,7 @@ router.post(
  *
  * /users/verifyAccount:
  *  post:
- *    description: verifyAccount for checking user login type
+ *    description: verifyAccount use for checking user login type
  *    produces:
  *      - application/json
  *    parameters:

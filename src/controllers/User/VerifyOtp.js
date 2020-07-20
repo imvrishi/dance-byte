@@ -22,7 +22,7 @@
       const user = await User.findById(userId).select(fieldsToSelect);
 
       if(user.otp.includes(otp)){
-          await User.update({_id: userId}, {$set:{otp: []}, isLoggedIn : true, otpVerifyCount : 0});
+          await user.update({_id: userId}, {$set:{otp: []}, isLoggedIn : true, otpVerifyCount : 0});
           res.success("OTP verified successfully", otp);
       }else{
           /*checking opt max attempt */
