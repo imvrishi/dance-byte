@@ -330,7 +330,7 @@ router.post("/registerUser", registerUser.validator, registerUser.handler);
  * /users/verifyOtp:
  *  post:
  *    description: verifyOtp check user enter otp is valid or not if enter valid otp the
- *                 isLogin status updated as 1 and send success msg and existing otp deleted
+ *                 isLogin status updated as TRUE and send success msg and existing otp deleted. 
  *    produces:
  *      - application/json
  *    parameters:
@@ -365,7 +365,7 @@ router.post(
  *
  * /users/generateOtp:
  *  post:
- *    description: generateOtp for new userr login and only 3 otp generated
+ *    description: generateOtp for new otp generated
  *    produces:
  *      - application/json
  *    parameters:
