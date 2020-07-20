@@ -6,6 +6,10 @@ const getUserVideosList = require("../controllers/User/GetUserVideosList");
 const getFollowUnfollowUser = require("../controllers/User/FollowUnfollowUser");
 const getUserConnectionsList = require("../controllers/User/GetUserConnectionsList");
 const registerUser = require("../controllers/User/RegisterUser");
+const verifyOtp  = require("../controllers/User/VerifyOtp");
+const generateOtp  = require("../controllers/User/GenerateOtp");
+const verifyAccount  = require("../controllers/User/VerifyAccount");
+
 
 /**
  * @swagger
@@ -205,7 +209,7 @@ router.post(
  *
  * /users/registerUser:
  *  post:
- *    description: Verifies whether the passed username is available or not
+ *    description: registerUser use for create new user
  *    produces:
  *      - application/json
  *    parameters:
@@ -319,5 +323,102 @@ router.post(
  *      - user
  */
 router.post("/registerUser", registerUser.validator, registerUser.handler);
+
+/**
+ * @swagger
+ *
+ * /users/verifyOtp:
+ *  post:
+ *    description: verifyOtp check user enter otp is valid or not if enter valid otp the
+ *                 isLogin status updated as TRUE and send success msg and existing otp deleted. 
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - name: userid
+ *        description:  exiting userid
+ *        in: rawJson
+ *        required: true
+ *        type: string
+ * 
+ *      - name: otp
+ *        description: Enter otp check with user otp 
+ *        in: rawJson
+ *        required: true
+ *        type: number
+ *    responses:
+ *      200:
+ *        description: Returns success msg
+ *      400:
+ *        description: Returns validation error
+ *    tags:
+ *      - user
+ *
+ */
+router.post(
+  "/verifyOtp",
+  verifyOtp.validator,
+  verifyOtp.handler
+); 
+
+/**
+ * @swagger
+ *
+ * /users/generateOtp:
+ *  post:
+ *    description: generateOtp use for generate new otp and sent to user
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - name: userid
+ *        description:  exiting userid
+ *        in: rawJson
+ *        required: true
+ *        type: string
+ *      
+ *    responses:
+ *      200:
+ *        description: Returns send generated otp
+ *      400:
+ *        description: Returns validation error
+ *    tags:
+ *      - user
+ *
+ */
+router.post(
+  "/generateOtp",
+  generateOtp.validator,
+  generateOtp.handler
+); 
+
+/**
+ * @swagger
+ *
+ * /users/verifyAccount:
+ *  post:
+ *    description: verifyAccount use for checking user login type
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - name: userid
+ *        description: exiting userid
+ *        in: rawJson
+ *        required: true
+ *        type: string
+ *      
+ *    responses:
+ *      200:
+ *        description: Returns success msg
+ *      400:
+ *        description: Returns validation error
+ *    tags:
+ *      - user
+ *
+ */
+
+router.post(
+  "/verifyAccount",
+  verifyAccount.validator,
+  verifyAccount.handler
+); 
 
 module.exports = router;
