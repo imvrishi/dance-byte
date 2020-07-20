@@ -17,7 +17,7 @@
 
     try {  
       const user = await User.findById(userId).select(fieldsToSelect);
-console.log(user);
+
       if(user.tokens.loginType == "mobile"){          
           res.success("account verify successfully");
       }else{
