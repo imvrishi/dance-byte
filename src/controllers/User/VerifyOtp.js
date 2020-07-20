@@ -2,30 +2,40 @@
   const validator = require("express-joi-validation").createValidator({
     passError: true,
   });
+
   const User = require("../../models/User");
+  const common = require("../../config/common");
+  const schema = require("../../util/validator");
 
-  const schema = Joi.object().keys({
-    otp       : Joi.number().required(),
-    userId    : Joi.string().required(),
-  });
-
-  exports.validator = validator.body(schema);
+  const joiSchema   = { ...schema };
+  joiSchema.userId  = Joi.string().required();
+  joiSchema.otp     = Joi.string().required();
+  
+  exports.validator = validator.body(Joi.object().keys(joiSchema));
 
   exports.handler = async (req, res, nex) => {
     const userId  = req.body.userId;
     const otp     = req.body.otp;
+    const fieldsToSelect ="otp otpVerifyCount";
 
     try {  
-      const user = await User.find({"otp" : { $in : [otp]}});
+      const user = await User.findById(userId).select(fieldsToSelect);
 
-      if ((user.length)>0) {
-        await User.update({_id: userId}, {$set:{otp: []}, isLoggedIn : true});
-        res.success("otp verified successfully", otp);
-      } else {
-        res.fail("Enter valid otp");
+      if(user.otp.includes(otp)){
+          await User.update({_id: userId}, {$set:{otp: []}, isLoggedIn : true, otpVerifyCount : 0});
+          res.success("OTP verified successfully", otp);
+      }else{
+          /*checking opt max attempt */
+        if((user.otpVerifyCount+1) <= parseInt(common.MAX_OTP_ATTEMPT)){
+            user.otpVerifyCount = user.otpVerifyCount + +1;
+            await user.save();
+            res.fail("Please enter valid OTP");
+        }else{
+          res.fail("You have reached maximum limit of receiving " + common.MAX_OTP_ATTEMPT + " OTP");
+        } 
       }
 
     } catch (error) {
-      return res.fail("Something went wrong", error);
+      return res.exception("Something went wrong", error);
     }
   };

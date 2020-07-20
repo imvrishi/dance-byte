@@ -3,10 +3,13 @@ const validator = require("express-joi-validation").createValidator({
   passError: true,
 });
 
-const schema = Joi.object().keys({
-  userName: Joi.string().required(),
-});
-exports.validator = validator.body(schema);
+const User = require("../../models/User");
+const schema = require("../../util/validator");
+
+const joiSchema = { ...schema };
+joiSchema.userName = Joi.string().required();
+
+exports.validator = validator.body(joiSchema);
 
 exports.handler = async (req, res, next) => {
   const userName = req.body.userName;
@@ -19,6 +22,6 @@ exports.handler = async (req, res, next) => {
     }
     return res.fail("Not Available");
   } catch (error) {
-    return res.fail("Not Available");
+    return res.exception("Something went wrong", error);
   }
 };

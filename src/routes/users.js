@@ -1,22 +1,21 @@
 const router = require("express").Router();
 
-const verifyUserName = require("../controllers/User/VerifyUserName");
+const checkUserNameAvailability = require("../controllers/User/CheckUserNameAvailability");
 const getUserProfile = require("../controllers/User/GetUserProfile");
 const getUserVideosList = require("../controllers/User/GetUserVideosList");
-const userController = require("../controllers/UserController");
-const registerUser  = require("../controllers/User/RegisterUser");
-const getUserConnectionsList  = require("../controllers/User/GetUserConnectionsList");
+const getFollowUnfollowUser = require("../controllers/User/FollowUnfollowUser");
+const getUserConnectionsList = require("../controllers/User/GetUserConnectionsList");
+const registerUser = require("../controllers/User/RegisterUser");
 const verifyOtp  = require("../controllers/User/VerifyOtp");
 const generateOtp  = require("../controllers/User/GenerateOtp");
+const verifyAccount  = require("../controllers/User/VerifyAccount");
 
-router.get("/", userController.registerUser);
-
-router.post("/", userController.postRegisterUser);
 
 /**
  * @swagger
  *
- * /users/verifyUserName:
+ * /users/  "/checkUserNameAvailability",
+:
  *  post:
  *    description: Verifies whether the passed username is available or not
  *    produces:
@@ -37,9 +36,9 @@ router.post("/", userController.postRegisterUser);
  *
  */
 router.post(
-  "/verifyUserName",
-  verifyUserName.validator,
-  verifyUserName.handler
+  "/checkUserNameAvailability",
+  checkUserNameAvailability.validator,
+  checkUserNameAvailability.handler
 );
 
 /**
@@ -157,7 +156,6 @@ router.post(
  *        description: Returns validation error
  *    tags:
  *      - user
- *
  */
 router.post(
   "/getUserVideos",
@@ -168,9 +166,50 @@ router.post(
 /**
  * @swagger
  *
+ * /users/userFollowUnfollow:
+ *  post:
+ *    description:We use this API to follow or un-follow.
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - name: userId
+ *        description: Which user is trying to follow/un-follow, we need their UserId.
+ *        in: rawJson
+ *        required: true
+ *        type: string
+ *
+ *      - name: targetedUserId
+ *        description: The UserId of that user who will be followed/un-followed by userId, we need their userId as targetedUserId.
+ *        in: rawJson
+ *        required: true
+ *        type: number
+ *
+ *      - name: action
+ *        description: This param will hold follow or un-follow string as value, as per request need.
+ *        in: rawJson
+ *        required: true
+ *        type: number
+ *    responses:
+ *      200:
+ *        description: Returns string You have successfully followed/un-followed along with data array or There is some error to follow/un-follow.
+ *      400:
+ *        description: Returns validation error
+ *    tags:
+ *      - user
+ */
+
+router.post(
+  "/userFollowUnfollow",
+  getFollowUnfollowUser.validator,
+  getFollowUnfollowUser.handler
+);
+
+/**
+ *  @swagger
+ *
  * /users/registerUser:
  *  post:
- *    description: registerUser use for add user details
+ *    description: registerUser use for add new user details
  *    produces:
  *      - application/json
  *    parameters:
@@ -179,97 +218,97 @@ router.post(
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *      - name: mobile
- *        description: Enter mobile 
+ *        description: Enter mobile
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *      - name: countryCode
  *        description: select countryCode of user
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *      - name: authenticatedToken
- *        description: add authenticatedToken 
+ *        description: add authenticatedToken
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *      - name: accountType
  *        description: add accountType
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *      - name: interests
  *        description: minimum 1 interests added
  *        in: rawJson
  *        required: true
  *        type: array
- *      
+ *
  *      - name: deviceId
  *        description: select user deviceId
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *      - name: deviceModel
  *        description: select user deviceModel
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *      - name: deviceOS
  *        description: select user deviceOS
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *      - name: deviceOSVersion
  *        description: select user deviceOSVersion
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *      - name: apiVersion
  *        description: select user apiVersion
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *      - name: deviceName
  *        description: select user deviceName
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *      - name: latitude
- *        description: select latitude 
+ *        description: select latitude
  *        in: rawJson
  *        required: false
  *        type: string
- *      
+ *
  *      - name: longitude
  *        description: select longitude
  *        in: rawJson
  *        required: false
  *        type: string
- *      
+ *
  *      - name: country
  *        description: seelct country
  *        in: rawJson
  *        required: false
  *        type: string
- *      
+ *
  *      - name: state
  *        description: select state
  *        in: rawJson
  *        required: false
  *        type: string
- *      
+ *
  *      - name: region
  *        description: select region
  *        in: rawJson
@@ -282,13 +321,8 @@ router.post(
  *        description: Returns validation error
  *    tags:
  *      - user
- *
  */
-router.post(
-  "/registerUser",
-  registerUser.validator,
-  registerUser.handler
-); 
+router.post("/registerUser", registerUser.validator, registerUser.handler);
 
 /**
  * @swagger
@@ -354,6 +388,37 @@ router.post(
   "/generateOtp",
   generateOtp.validator,
   generateOtp.handler
+); 
+
+/**
+ * @swagger
+ *
+ * /users/verifyAccount:
+ *  post:
+ *    description: verifyAccount for checking user login type
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - name: userid
+ *        description: exiting userid
+ *        in: rawJson
+ *        required: true
+ *        type: string
+ *      
+ *    responses:
+ *      200:
+ *        description: Returns success msg
+ *      400:
+ *        description: Returns validation error
+ *    tags:
+ *      - user
+ *
+ */
+
+router.post(
+  "/verifyAccount",
+  verifyAccount.validator,
+  verifyAccount.handler
 ); 
 
 module.exports = router;

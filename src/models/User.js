@@ -19,6 +19,10 @@ const userSchema = new Schema(
     otp: {
       type: [String],
     },
+    otpVerifyCount: {
+      type: Number,
+      default: 0,
+    },
     isLoggedIn: {
       type: Boolean,
     },
