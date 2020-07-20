@@ -71,6 +71,6 @@ exports.handler = async (req, res,next) => {
       res.fail("Error occured when we are creating your account.");
     }
   } catch (error) {
-    res.fail("Error occured when we are creating your account.");
+    res.exception("Error occured when we are creating your account.", error);
   }
 };

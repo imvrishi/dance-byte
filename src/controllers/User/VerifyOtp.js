@@ -36,6 +36,6 @@
       }
 
     } catch (error) {
-      return res.exception("Something went wrong", error);
+      return res.exception("Invalid Parameters", error);
     }
   };

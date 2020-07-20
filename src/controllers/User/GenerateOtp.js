@@ -14,7 +14,7 @@ exports.handler = async (req, res, nex) => {
     const  userId    = req.body.userId; 
     const  new_otp   = Math.floor(100000 + Math.random() * 900000);
   try { 
-    
+
       const otpStatus = await User.update({_id: userId}, {$push:{otp: new_otp }});
         if (otpStatus){      
           res.success("OTP send successfully", new_otp);
@@ -23,6 +23,6 @@ exports.handler = async (req, res, nex) => {
         }  
 
   } catch (error) {
-    return res.exception("Something went wrong", error);
+    return res.exception("Invalid Parameters", error);
   }
 };
