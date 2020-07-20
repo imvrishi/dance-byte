@@ -209,7 +209,7 @@ router.post(
  *
  * /users/registerUser:
  *  post:
- *    description: registerUser use for create newe user
+ *    description: registerUser use for create new user
  *    produces:
  *      - application/json
  *    parameters:
