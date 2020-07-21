@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const users = require("./users");
+const users = require("./userRoutes/index");
 const videos = require("./videos");
 const home = require("./home");
 
