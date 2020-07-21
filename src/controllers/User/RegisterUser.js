@@ -1,30 +1,31 @@
-const Joi = require("@hapi/joi");
-const validator = require("express-joi-validation").createValidator({
-  passError: true,
-});
-const User = require("../../models/User");
+  const Joi = require("@hapi/joi");
+  const validator = require("express-joi-validation").createValidator({
+    passError: true,
+  });
+  const User = require("../../models/User");
+  const schema = require("../../util/validator");
 
-const schema = Joi.object().keys({
-  userName            : Joi.string().required(),
-  mobile              : Joi.string().required(),
-  countryCode         : Joi.string().required(),
-  authenticatedToken  : Joi.string().required(),
-  accountType         : Joi.string().required(),
-  interests           : Joi.array().min(1).required(),    
-  deviceId            : Joi.string().required(),
-  deviceModel         : Joi.string().required(),
-  deviceOS            : Joi.string().required(),
-  deviceOSVersion     : Joi.string().required(),
-  apiVersion          : Joi.string().required(),
-  deviceName          : Joi.string().required(),
-  latitude            : Joi.string(),
-  longitude           : Joi.string(),
-  country             : Joi.string(),
-  state               : Joi.string(),
-  region              : Joi.string(),
-});
+  const joiSchema   = { ...schema };
+  joiSchema.userName  = Joi.string().required();
+  joiSchema.mobile     = Joi.string().required();
+  joiSchema.countryCode     = Joi.string().required();
+  joiSchema.authenticatedToken     = Joi.string().required();
+  joiSchema.accountType     = Joi.string().required();
+  joiSchema.interests     =  Joi.array().min(1).required();
+  joiSchema.deviceId     = Joi.string().required();
+  joiSchema.deviceModel     = Joi.string().required();
+  joiSchema.deviceOS     = Joi.string().required();
+  joiSchema.deviceOSVersion     = Joi.string().required();
+  joiSchema.apiVersion     = Joi.string().required();
+  joiSchema.deviceName     = Joi.string().required();
+  joiSchema.latitude     = Joi.string();
+  joiSchema.longitude     = Joi.string();
+  joiSchema.country     = Joi.string();
+  joiSchema.state     = Joi.string();
+  joiSchema.region     = Joi.string();
 
-exports.validator = validator.body(schema);
+  exports.validator = validator.body(Joi.object().keys(joiSchema));
+
 
 exports.handler = async (req, res,next) => {  
   
@@ -34,7 +35,7 @@ exports.handler = async (req, res,next) => {
       mobile            :req.body.mobile,
       countryCode       :req.body.countryCode,
     },
-    otp                 : Math.floor(Math.random() * 1000000),
+    otp                 : [Math.floor(100000 + Math.random() * 900000)],
     authenticatedToken  : req.body.authenticatedToken,
     accountType         : req.body.accountType,
     interests           : req.body.interests,   
@@ -55,7 +56,8 @@ exports.handler = async (req, res,next) => {
     },
     tokens : {
            loginType   : "mobile"
-    }
+    },
+    isRegistered        : true,
   };
 
   try {
@@ -69,6 +71,6 @@ exports.handler = async (req, res,next) => {
       res.fail("Error occured when we are creating your account.");
     }
   } catch (error) {
-    res.fail("Error occured when we are creating your account.");
+    res.exception("Error occured when we are creating your account.", error);
   }
 };
