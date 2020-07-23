@@ -7,6 +7,7 @@ const connect = () => {
     .connect(database.DB_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
+      useCreateIndex: true,
     })
     .then(result => {
       console.log("Connected");
