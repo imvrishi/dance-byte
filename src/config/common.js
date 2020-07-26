@@ -13,7 +13,7 @@ module.exports = {
     parseInt(process.env.MAX_IMAGE_FILE_SIZE) || 5 * 1024 * 1024, // 5 MB
   SUPPORTED_IMAGE_FILE_MIME: process.env.SUPPORTED_IMAGE_FILE_MIME.split(
     " "
-  ) || ["image/jepg", "image/png"], // We won't support gif file
+  ) || ["image/jpeg", "image/png"], // We won't support gif file
   MAX_VIDEO_FILE_SIZE:
     parseInt(process.env.MAX_VIDEO_FILE_SIZE) || 50 * 1024 * 1024, // 50 MB
   MAX_VIDEO_FILE_DURATION: parseInt(process.env.MAX_VIDEO_FILE_DURATION) || 30, // 30 seconds

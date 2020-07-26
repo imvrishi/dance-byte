@@ -5,7 +5,7 @@ const updateUserProfile = require("../../controllers/User/UpdateUserProfile");
 /**
  *  @swagger
  *
- * /users/registerUser:
+ * /users/updateUserProfile:
  *  post:
  *    description: Verifies whether the passed username is available or not
  *    produces:

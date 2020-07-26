@@ -5,8 +5,7 @@ const checkUserNameAvailability = require("../../controllers/User/CheckUserNameA
 /**
  * @swagger
  *
- * /users/  "/checkUserNameAvailability",
-:
+ * /users/checkUserNameAvailability:
  *  post:
  *    description: Verifies whether the passed username is available or not
  *    produces:
