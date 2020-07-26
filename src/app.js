@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const formidableMiddleware = require("express-formidable");
 
 const router = require("./routes");
 require("./util/database")();
@@ -11,8 +12,9 @@ const middleWares = require("./middlewares");
 const app = express();
 
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+app.use(formidableMiddleware());
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "..", "public")));
 

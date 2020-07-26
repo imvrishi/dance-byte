@@ -6,6 +6,7 @@ const userVideosRoute = require("./userVideosRoute");
 const followUnFollowRoute = require("./followUnFollowRoute");
 const connectionsRoute = require("./connectionsRoute");
 const registerUseRouter = require("./registerUseRouter");
+const updateUserProfileRoute = require("./updateUserProfileRoute");
 
 router.use("/checkUserNameAvailability", availabilityRoute);
 
@@ -18,5 +19,7 @@ router.use("/getUserVideos", userVideosRoute);
 router.use("/userFollowUnfollow", followUnFollowRoute);
 
 router.use("/registerUser", registerUseRouter);
+
+router.use("/updateUserProfile", updateUserProfileRoute);
 
 module.exports = router;
