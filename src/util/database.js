@@ -1,22 +1,23 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const { database } = require('../config');
+const { database } = require("../config");
 
 const connect = () => {
-
-    mongoose.connect(database.DB_URI,{useUnifiedTopology: true, useNewUrlParser: true})
-        .then(result => {
-            console.log('Connected');
-        })
-        .catch(error => {
-            console.log(error);
-        });
-}
+  mongoose
+    .connect(database.DB_URI, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useCreateIndex: true,
+    })
+    .then(result => {
+      console.log("Connected");
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
 
 module.exports = connect;
-
-
-
 
 // const MongoClient = require('mongodb').MongoClient;
 // const { database } = require('../config');

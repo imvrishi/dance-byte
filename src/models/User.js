@@ -1,177 +1,275 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-    userName : {
-        type : String,
-        required : true
+const userSchema = new Schema(
+  {
+    userName: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    mobile : {
-        type : Number,
-        required : true
+    mobile: {
+      countryCode: {
+        type: String,
+      },
+      mobile: {
+        type: Number,
+      },
     },
-    otp : {
-        type : Number,
-        required : true
+    otp: {
+      type: [String],
     },
-    firstName : { type : String },
-    lastName : { type : String },
-    fulName : { type : String },
-    profilePicture : { type : String },
-    email: { type : String },
-    totalLikes : {
-        type : Number,
-        default: 0
+    otpVerifyCount: {
+      type: Number,
+      default: 0,
     },
-    totalViews : {
-        type : Number,
-        default: 0
+    isLoggedIn: {
+      type: Boolean,
     },
-    totalFollowers : {
-        type : Number,
-        default: 0
+    isRegistered: {
+      type: Boolean,
     },
-    totalFollowings : {
-        type : Number,
-        default: 0
+    firstName: {
+      type: String,
     },
-    totalBlockedUser : {
-        type : Number,
-        default: 0
+    lastName: {
+      type: String,
     },
-    intrests : {
-        type: [String]
+    fullName: {
+      type: String,
     },
-    followers : [
-        {
-            _id : { type : Schema.Types.ObjectId },
-            userName : {type : String },
-            fullName : {type : String },
-            profilePicture : {type : String },
-           /*  timestamps: { 
-                createdAt : 'createdTimestamp',
-                updatedAt : 'updatedTimestamp',
-                currentTime: () => Math.floor(Date.now() / 1000)
-            } */
-        }
-    ],
-    followings : [
-        {
-            _id : { type : Schema.Types.ObjectId },
-            userName : {type : String },
-            fullName : {type : String },
-            profilePicture : {type : String },
-            /* timestamps: { 
-                createdAt : 'createdTimestamp',
-                updatedAt : 'updatedTimestamp',
-                currentTime: () => Math.floor(Date.now() / 1000)
-            } */
-        }
-    ],
-    blockedUsers : [
-        {
-            _id : { type : Schema.Types.ObjectId },
-            userName : {type : String },
-            fullName : {type : String },
-            profilePicture : {type : String },
-            /* timestamps: { 
-                createdAt : 'createdTimestamp',
-                updatedAt : 'updatedTimestamp',
-                currentTime: () => Math.floor(Date.now() / 1000)
-            } */
-        }
-    ],
-    currentDevice : {
-        deviceId:{
-           type :  String,
-           required : true
+    bio: {
+      type: String,
+    },
+    profilePicture: {
+      type: String,
+    },
+    email: {
+      type: String,
+    },
+    totalLikes: {
+      type: Number,
+      default: 0,
+    },
+    totalViews: {
+      type: Number,
+      default: 0,
+    },
+    totalShares: {
+      type: Number,
+      default: 0,
+    },
+    authenticatedToken: {
+      type: String,
+      required: true,
+    },
+    accountType: {
+      type: String,
+      enum: ["public", "private"],
+      default: "public",
+    },
+    userType: {
+      type: String,
+      enum: ["normal", "special", "support", "admin"],
+      default: "normal",
+    },
+    totalFollowers: {
+      type: Number,
+      default: 0,
+    },
+    totalFollowings: {
+      type: Number,
+      default: 0,
+    },
+    totalBlockedUsers: {
+      type: Number,
+      default: 0,
+    },
+    interests: {
+      type: [String],
+    },
+    followers: [
+      {
+        _id: { type: Schema.Types.ObjectId },
+        userName: { type: String },
+        fullName: { type: String },
+        profilePicture: { type: String },
+        createdTimestamp: {
+          type: Date,
+          default: Date.now(),
         },
-        deviceModel:{
-            type : String,
-            required : true
-        },	
-        deviceOS:{
-            type : String,
-            required : true
-        },	
-        deviceOSVersion:{
-            type : String,
-            required : true
-        },	
-        apiVersion:{
-            type : String,
-            required : true
-        },	
-        deviceName:{
-            type : String,
-            required : true
-        },	
-        /* timestamps: { 
-            createdAt : 'createdTimestamp',
-            updatedAt : 'updatedTimestamp',
-            currentTime: () => Math.floor(Date.now() / 1000)
-        } */
-    },
-    devices : [
-        {
-            deviceId:{
-                type :  String,
-                required : true
-            },
-            deviceModel:{
-                type : String,
-                required : true
-            },	
-            deviceOS:{
-                type : String,
-                required : true
-            },	
-            deviceOSVersion:{
-                type : String,
-                required : true
-            },	
-            apiVersion:{
-                type : String,
-                required : true
-            },	
-            deviceName:{
-                type : String,
-                required : true
-            },	
-           /*  timestamps: { 
-                createdAt : 'createdTimestamp',
-                updatedAt : 'updatedTimestamp',
-                currentTime: () => Math.floor(Date.now() / 1000)
-            } */
-        }
+      },
     ],
-    currentLocation : {
-        type : String,
-        required : true
+    followings: [
+      {
+        _id: { type: Schema.Types.ObjectId },
+        userName: { type: String },
+        fullName: { type: String },
+        profilePicture: { type: String },
+        createdTimestamp: {
+          type: Date,
+          default: Date.now(),
+        },
+      },
+    ],
+    blockedUsers: [
+      {
+        _id: { type: Schema.Types.ObjectId },
+        userName: { type: String },
+        fullName: { type: String },
+        profilePicture: { type: String },
+        createdTimestamp: {
+          type: Date,
+          default: Date.now(),
+        },
+      },
+    ],
+    currentDevice: {
+      deviceId: {
+        type: String,
+        required: true,
+      },
+      deviceModel: {
+        type: String,
+        required: true,
+      },
+      deviceOS: {
+        type: String,
+        required: true,
+      },
+      deviceOSVersion: {
+        type: String,
+        required: true,
+      },
+      apiVersion: {
+        type: String,
+        required: true,
+      },
+      deviceName: {
+        type: String,
+        required: true,
+      },
+      createdTimestamp: {
+        type: Date,
+        default: Date.now(),
+      },
     },
-    locations : {
-        type : [ String ],
-        required : true
+    devices: [
+      {
+        deviceId: {
+          type: String,
+        },
+        deviceModel: {
+          type: String,
+        },
+        deviceOS: {
+          type: String,
+        },
+        deviceOSVersion: {
+          type: String,
+        },
+        apiVersion: {
+          type: String,
+        },
+        deviceName: {
+          type: String,
+        },
+        createdTimestamp: {
+          type: Date,
+        },
+      },
+    ],
+    currentLocation: {
+      latitude: {
+        type: Number,
+      },
+      longitude: {
+        type: Number,
+      },
+      country: {
+        type: String,
+      },
+      state: {
+        type: String,
+      },
+      region: {
+        type: String,
+      },
     },
-    tokens : {
-        trype : [String]
+    locations: [
+      {
+        latitude: {
+          type: Number,
+        },
+        longitude: {
+          type: Number,
+        },
+        country: {
+          type: String,
+        },
+        state: {
+          type: String,
+        },
+        region: {
+          type: String,
+        },
+      },
+    ],
+    tokens: {
+      loginType: {
+        type: String,
+        enum: ["mobile", "email", "google", "facebook", "twitter", "instagram"],
+        required: true,
+      },
+      socialToken: {
+        type: String,
+      },
     },
-    status : {
-        type : String,
-        enum : ['active', 'inactive', 'disabled'],
-        default: 'active'
+    status: {
+      type: String,
+      enum: ["active", "inactive", "disabled"],
+      default: "active",
     },
-    /* timestamps: { createdAt: 'createdDate', updatedAt: 'updatedDate',  },
-    timestamps: { 
-        createdAt : 'createdTimestamp',
-        updatedAt : 'updatedTimestamp',
-        currentTime: () => Math.floor(Date.now() / 1000)
-    } */
-    // createdTimestamp, updatedTimestamp Remaining to set in model
-});
+    interestedLanguages: {
+      type: String,
+    },
+    videos: {
+      liked: [
+        {
+          video: {
+            type: Schema.Types.ObjectId,
+            ref: "Video",
+          },
+        },
+      ],
+      shared: [
+        {
+          video: {
+            type: Schema.Types.ObjectId,
+            ref: "Video",
+          },
+        },
+      ],
+      uploaded: [
+        {
+          video: {
+            type: Schema.Types.ObjectId,
+            ref: "Video",
+          },
+        },
+      ],
+    },
+  },
+  {
+    timestamps: {
+      createdAt: "createdTimestamp",
+      updatedAt: "updatedTimestamp",
+    },
+  }
+);
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);
 
 // old functionality is here
 /* const mongodb =require('mongodb');
@@ -181,7 +279,7 @@ const { getDB} = require('../util/database');
 const ObjectId = mongodb.ObjectId;
 const db = getDB();
 module.exports = class User {
-    
+
     constructor(id, username, mobile, otherProp) {
         this.username = username;
         this.mobile = mobile;

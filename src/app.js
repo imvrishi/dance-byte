@@ -3,17 +3,24 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const formidableMiddleware = require("express-formidable");
 
 const router = require("./routes");
-const database = require("./util/database")();
+require("./util/database")();
+const middleWares = require("./middlewares");
 
 const app = express();
 
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
+app.use(formidableMiddleware());
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "..", "public")));
+
+for (const k in middleWares) {
+  app.use(middleWares[k]);
+}
 
 app.use("/", router);
 
@@ -28,9 +35,14 @@ app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+  // generate the json error response
+  if (err && err.error && err.error.isJoi) {
+    res.status(err.status || 400);
+    res.fail("Validation Failed", err.error.details);
+  } else {
+    res.status(err.status || 500);
+    res.fail(res.locals);
+  }
 });
 
 module.exports = app;
