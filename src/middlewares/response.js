@@ -37,7 +37,7 @@ module.exports = function (req, res, next) {
       exceptionOccurred: error,
     };
     console.log(data);
-    res.json({
+    res.status(500).json({
       status: false,
       message: message,
       data: {},

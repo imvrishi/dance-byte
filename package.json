@@ -40,6 +40,7 @@
     "mongoose": "^5.9.25",
     "morgan": "~1.9.1",
     "swagger-jsdoc-sync-webpack-plugin": "^1.1.0",
-    "swagger-ui-express": "^4.1.4"
+    "swagger-ui-express": "^4.1.4",
+    "uuid": "^8.2.0"
   }
 }
