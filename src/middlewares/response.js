@@ -1,15 +1,17 @@
 module.exports = function (req, res, next) {
   res.success = function (message, data = {}) {
-    if (req.body.draw) {
-      data.draw = req.body.draw;
-    }
+    if (req.body) {
+      if (req.body.draw) {
+        data.draw = req.body.draw;
+      }
 
-    if (req.body.limit) {
-      data.limit = req.body.limit;
-    }
+      if (req.body.limit) {
+        data.limit = req.body.limit;
+      }
 
-    if (req.body.offset) {
-      data.offset = req.body.offset;
+      if (req.body.offset) {
+        data.offset = req.body.offset;
+      }
     }
 
     res.json({
@@ -35,7 +37,7 @@ module.exports = function (req, res, next) {
       exceptionOccurred: error,
     };
     console.log(data);
-    res.json({
+    res.status(500).json({
       status: false,
       message: message,
       data: {},

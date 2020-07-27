@@ -6,16 +6,14 @@ const getUserVideosList = require("../controllers/User/GetUserVideosList");
 const getFollowUnfollowUser = require("../controllers/User/FollowUnfollowUser");
 const getUserConnectionsList = require("../controllers/User/GetUserConnectionsList");
 const registerUser = require("../controllers/User/RegisterUser");
-const verifyOtp  = require("../controllers/User/VerifyOtp");
-const generateOtp  = require("../controllers/User/GenerateOtp");
-const verifyAccount  = require("../controllers/User/VerifyAccount");
-
+const verifyOtp = require("../controllers/User/VerifyOtp");
+const generateOtp = require("../controllers/User/GenerateOtp");
+const verifyAccount = require("../controllers/User/VerifyAccount");
 
 /**
  * @swagger
  *
- * /users/  "/checkUserNameAvailability",
-:
+ * /users/checkUserNameAvailability:
  *  post:
  *    description: Verifies whether the passed username is available or not
  *    produces:
@@ -168,7 +166,7 @@ router.post(
  *
  * /users/userFollowUnfollow:
  *  post:
- *    description:We use this API to follow or un-follow.
+ *    description: We use this API to follow or un-follow.
  *    produces:
  *      - application/json
  *    parameters:
@@ -329,8 +327,7 @@ router.post("/registerUser", registerUser.validator, registerUser.handler);
  *
  * /users/verifyOtp:
  *  post:
- *    description: verifyOtp check user enter otp is valid or not if enter valid otp the
- *                 isLogin status updated as TRUE and send success msg and existing otp deleted. 
+ *    description: verifyOtp check user enter otp is valid or not if enter valid otp the isLogin status updated as TRUE and send success msg and existing otp deleted.
  *    produces:
  *      - application/json
  *    parameters:
@@ -339,9 +336,9 @@ router.post("/registerUser", registerUser.validator, registerUser.handler);
  *        in: rawJson
  *        required: true
  *        type: string
- * 
+ *
  *      - name: otp
- *        description: Enter otp check with user otp 
+ *        description: Enter otp check with user otp
  *        in: rawJson
  *        required: true
  *        type: number
@@ -354,11 +351,7 @@ router.post("/registerUser", registerUser.validator, registerUser.handler);
  *      - user
  *
  */
-router.post(
-  "/verifyOtp",
-  verifyOtp.validator,
-  verifyOtp.handler
-); 
+router.post("/verifyOtp", verifyOtp.validator, verifyOtp.handler);
 
 /**
  * @swagger
@@ -374,7 +367,7 @@ router.post(
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *    responses:
  *      200:
  *        description: Returns send generated otp
@@ -384,11 +377,7 @@ router.post(
  *      - user
  *
  */
-router.post(
-  "/generateOtp",
-  generateOtp.validator,
-  generateOtp.handler
-); 
+router.post("/generateOtp", generateOtp.validator, generateOtp.handler);
 
 /**
  * @swagger
@@ -404,7 +393,7 @@ router.post(
  *        in: rawJson
  *        required: true
  *        type: string
- *      
+ *
  *    responses:
  *      200:
  *        description: Returns success msg
@@ -415,10 +404,6 @@ router.post(
  *
  */
 
-router.post(
-  "/verifyAccount",
-  verifyAccount.validator,
-  verifyAccount.handler
-); 
+router.post("/verifyAccount", verifyAccount.validator, verifyAccount.handler);
 
 module.exports = router;

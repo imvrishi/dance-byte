@@ -7,7 +7,7 @@ const getFollowUnfollowUser = require("../../controllers/User/FollowUnfollowUser
  *
  * /users/userFollowUnfollow:
  *  post:
- *    description:We use this API to follow or un-follow.
+ *    description: We use this API to follow or un-follow.
  *    produces:
  *      - application/json
  *    parameters:

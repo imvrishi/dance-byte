@@ -9,7 +9,7 @@ const schema = require("../../util/validator");
 const joiSchema = { ...schema };
 joiSchema.userName = Joi.string().required();
 
-exports.validator = validator.body(joiSchema);
+exports.validator = validator.body(Joi.object(joiSchema));
 
 exports.handler = async (req, res, next) => {
   const userName = req.body.userName;
