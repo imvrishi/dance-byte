@@ -1,5 +1,4 @@
 const uuid = require("uuid");
-// const formidable = require("formidable");
 const path = require("path");
 const fs = require("fs");
 const Joi = require("@hapi/joi");
@@ -25,7 +24,6 @@ joiSchema.firstName = Joi.string();
 joiSchema.lastName = Joi.string();
 joiSchema.fullName = Joi.string();
 joiSchema.bio = Joi.string();
-// joiSchema.profilePicture = Joi.any();
 joiSchema.email = Joi.string();
 joiSchema.accountType = Joi.string();
 joiSchema.interests = Joi.array();
@@ -99,28 +97,6 @@ exports.handler = async (req, res, next) => {
       const rawData = await fsReadFile(profilePicture.path);
       await fsWriteFile(uploadFile, rawData);
       data.profilePicture = uploadFile;
-
-      /*const options = {
-        // encoding: "utf-8",
-        uploadDir: uploadPath,
-        multiples: false,
-        maxFileSize: common.MAX_IMAGE_FILE_SIZE,
-      };*/
-
-      // const form = new formidable.IncomingForm();
-
-      // form.on("fileBegin", function (name, file) {
-      //   console.log("fileBegin" + file.path);
-      //   file.path = uploadPath + file.name;
-      // });
-
-      // form.on("file", function (name, file) {
-      //   console.log("Uploaded " + file.name);
-      //   console.log("Uploaded path " + file.path);
-      //   data.profilePicture = "upload/" + userName + "/profile/" + file.name;
-      // });
-
-      // form.parse(req);
     }
 
     /**
